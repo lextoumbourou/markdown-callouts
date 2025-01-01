@@ -1,0 +1,14 @@
+input: |
+  > [!note] How many family members do you have?
+
+output: |
+  <div class="callout" data-callout="note">
+    <div class="callout-title">
+      <div class="callout-icon">
+        📝
+      </div>
+      <div class="callout-title-inner">
+        How many family members do you have?
+      </div>
+    </div>
+  </div>

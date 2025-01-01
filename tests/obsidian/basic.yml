@@ -1,0 +1,19 @@
+input: |
+  > [!note]
+  > This is a basic note callout
+output: |
+  <div class="callout" data-callout="note">
+    <div class="callout-title">
+      <div class="callout-icon">
+        📝
+      </div>
+      <div class="callout-title-inner">
+        Note
+      </div>
+    </div>
+    <div class="callout-content">
+      <p>
+        This is a basic note callout
+      </p>
+    </div>
+  </div>

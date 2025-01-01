@@ -1,0 +1,19 @@
+input: |
+  > [!question] What is the capital of France?
+  > The capital of France is Paris.
+output: |
+  <div class="callout" data-callout="question">
+    <div class="callout-title">
+      <div class="callout-icon">
+        ❓
+      </div>
+      <div class="callout-title-inner">
+        What is the capital of France?
+      </div>
+    </div>
+    <div class="callout-content">
+      <p>
+        The capital of France is Paris.
+      </p>
+    </div>
+  </div>
