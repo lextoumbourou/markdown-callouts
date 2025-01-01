@@ -106,8 +106,10 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
 
 
 class ObsidianCalloutsExtension(Extension):
-    def extendMarkdown(self, md: Markdown) -> None:
-        md.parser.blockprocessors.register(
+    @classmethod
+    def extendMarkdown(cls, md: Markdown) -> None:
+        parser = md.parser
+        parser.blockprocessors.register(
             ObsidianCalloutsBlockProcessor(md.parser),
             "obsidian-callouts",
             21.1,  # Priority just before blockquote
