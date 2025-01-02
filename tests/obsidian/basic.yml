@@ -12,7 +12,7 @@ output: |
       </div>
     </div>
     <div class="callout-content">
-      <p>
+      <p dir="auto">
         This is a basic note callout
       </p>
     </div>

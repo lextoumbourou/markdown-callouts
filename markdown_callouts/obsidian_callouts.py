@@ -53,16 +53,31 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
         title = m[4]
         content = m[5] or ""
 
-        # Clean up the content lines
-        content = "\n".join(self.clean(line) for line in content.split("\n"))
+        # Clean up the content lines and preserve line breaks
+        content_lines = []
+        for line in content.split("\n"):
+            cleaned = self.clean(line)
+            if cleaned:  # Only add non-empty lines
+                content_lines.append(cleaned)
+
+        # Join all lines with line breaks instead of creating separate paragraphs
+        content = "<br>".join(content_lines)
+
+        # Create the main callout container with folding class if needed
+        classes = ["callout"]
+        if fold in ["+", "-"]:
+            classes.append("is-collapsible")
 
         # Create the main callout container
         admon = etree.SubElement(
-            parent, "div", {"class": "callout", "data-callout": kind.lower()}
+            parent, "div", {"class": " ".join(classes), "data-callout": kind.lower()}
         )
 
         # Create title container
-        title_container = etree.SubElement(admon, "div", {"class": "callout-title"})
+        attrib = {"class": "callout-title"}
+        if fold in ["+", "-"]:
+            attrib["dir"] = "auto"
+        title_container = etree.SubElement(admon, "div", attrib)
 
         # Add icon container
         icon_container = etree.SubElement(
@@ -93,11 +108,24 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
         )
         title_inner.text = title.strip() if title.strip() else kind.title()
 
+        # Add fold icon if needed
+        if fold in ["+", "-"]:
+            fold_div = etree.SubElement(
+                title_container, "div", {"class": "callout-fold"}
+            )
+            fold_div.text = "▶️"
+
         # Only add content div if there is content
         if content.strip():
             content_div = etree.SubElement(admon, "div", {"class": "callout-content"})
             self.parser.state.set("blockquote")
+            # Parse the entire content as a single chunk
             self.parser.parseChunk(content_div, content)
+
+            # Add dir="auto" to all paragraph elements in the content
+            for p in content_div.findall(".//p"):
+                p.set("dir", "auto")
+
             self.parser.state.reset()
 
         # Handle any remaining content

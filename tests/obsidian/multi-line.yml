@@ -1,19 +1,23 @@
 input: |
-  > [!question] What is the capital of France?
-  > The capital of France is Paris.
+  > [!tip]
+  > This is a basic note callout
+  > a) A thing
+  > b) Another thing
 output: |
-  <div class="callout" data-callout="question">
+  <div class="callout" data-callout="tip">
     <div class="callout-title">
       <div class="callout-icon">
-        ❓
+        💡
       </div>
       <div class="callout-title-inner">
-        What is the capital of France?
+        Tip
       </div>
     </div>
     <div class="callout-content">
       <p dir="auto">
-        The capital of France is Paris.
+        This is a basic note callout<br/>
+        a) A thing<br/>
+        b) Another thing
       </p>
     </div>
   </div>

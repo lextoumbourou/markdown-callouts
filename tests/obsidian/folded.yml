@@ -1,0 +1,20 @@
+input: |
+  > [!question]- What is the capital city of Australia?
+  > Canberra!
+output: |
+  <div data-callout="question" class="callout is-collapsible">
+    <div class="callout-title" dir="auto">
+      <div class="callout-icon">
+        ❓
+      </div>
+      <div class="callout-title-inner">
+        What is the capital city of Australia?
+      </div>
+      <div class="callout-fold">
+        ▶️
+      </div>
+    </div>
+    <div class="callout-content">
+      <p dir="auto">Canberra!</p>
+    </div>
+  </div>

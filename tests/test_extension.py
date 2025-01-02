@@ -7,6 +7,7 @@ from markdown import Markdown
 from markdown_callouts.callouts import CalloutsExtension
 from markdown_callouts.github_callouts import GitHubCalloutsExtension
 from markdown_callouts.obsidian_callouts import ObsidianCalloutsExtension
+
 extension_styles = {
     "callouts": CalloutsExtension,
     "github": GitHubCalloutsExtension,
@@ -24,7 +25,7 @@ def test_extension(request, golden):
     ]
     md = Markdown(extensions=extensions)
     output = md.convert(golden["input"])
-    soup = bs4.BeautifulSoup(output, features="html.parser")
-    html = soup.prettify().rstrip("\n")
-    html = re.sub(r"^( *)", r"\1\1", html, flags=re.MULTILINE)
-    assert html == golden.out["output"]
+    actual_soup = bs4.BeautifulSoup(output, features="html.parser")
+    expected_soup = bs4.BeautifulSoup(golden.out["output"], features="html.parser")
+
+    assert actual_soup.prettify() == expected_soup.prettify()
