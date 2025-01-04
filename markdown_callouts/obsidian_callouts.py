@@ -33,47 +33,51 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
     )
 
     def test(self, parent, block):
+        # Allow callouts even inside blockquotes, so we can nest them
         return (
             bool(self.CALLOUT_PATTERN.search(block))
-            and not self.parser.state.isstate("blockquote")
             and not util.nearing_recursion_limit()
         )
 
     def run(self, parent: etree.Element, blocks: list[str]) -> None:
+        """
+        1. Match: > [!type] Title
+        2. Extract all lines that start with '>'
+        3. Inside those lines, detect further nested callouts or treat them as multi-line text
+        """
         block = blocks.pop(0)
         m = self.CALLOUT_PATTERN.search(block)
-        assert m
+        if not m:
+            return
 
+        # Anything before this callout gets parsed normally
         before = block[: m.start()]
         if before.strip():
             self.parser.parseBlocks(parent, [before])
 
-        kind = m[2]
-        fold = m[3]
-        title = m[4]
-        content = m[5] or ""
+        kind = m.group(2)
+        fold = m.group(3)
+        title = m.group(4)
+        content = m.group(5) or ""
 
-        # Create the main callout container with folding class if needed
-        classes = ["callout"]
+        # Build outer <div>
+        div_classes = ["callout"]
         if fold in ["+", "-"]:
-            classes.append("is-collapsible")
+            div_classes.append("is-collapsible")
 
-        # Create the main callout container
-        admon = etree.SubElement(
-            parent, "div", {"class": " ".join(classes), "data-callout": kind.lower()}
+        callout_div = etree.SubElement(
+            parent,
+            "div",
+            {"class": " ".join(div_classes), "data-callout": kind.lower()},
         )
 
-        # Create title container
-        attrib = {"class": "callout-title"}
+        # Title container
+        title_attrs = {"class": "callout-title"}
         if fold in ["+", "-"]:
-            attrib["dir"] = "auto"
-        title_container = etree.SubElement(admon, "div", attrib)
+            title_attrs["dir"] = "auto"
+        title_container = etree.SubElement(callout_div, "div", title_attrs)
 
-        # Add icon container
-        icon_container = etree.SubElement(
-            title_container, "div", {"class": "callout-icon"}
-        )
-        # For now, using simple emoji icons - you might want to replace with proper SVG icons
+        # Icon
         icon_map = {
             "note": "📝",
             "abstract": "📄",
@@ -90,58 +94,79 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
             "example": "📋",
             "quote": "💬",
         }
-        icon_container.text = icon_map.get(kind.lower(), "📝")
+        icon_el = etree.SubElement(title_container, "div", {"class": "callout-icon"})
+        icon_el.text = icon_map.get(kind.lower(), "📝")
 
-        # Add title text
+        # Title text
         title_inner = etree.SubElement(
-            title_container, "div", {"class": "callout-title-inner"}
+            title_container,
+            "div",
+            {"class": "callout-title-inner"},
         )
         title_inner.text = title.strip() if title.strip() else kind.title()
 
-        # Add fold icon if needed
+        # Fold icon if needed
         if fold in ["+", "-"]:
-            fold_div = etree.SubElement(
+            fold_el = etree.SubElement(
                 title_container, "div", {"class": "callout-fold"}
             )
-            fold_div.text = "▶️"
+            fold_el.text = "▶️"
 
-        # Only add content div if there is content
+        # Parse the callout body
         if content.strip():
-            content_div = etree.SubElement(admon, "div", {"class": "callout-content"})
-
-            # Add dir="auto" to all paragraph elements in the content
-            for p in content_div.findall(".//p"):
-                p.set("dir", "auto")
-
-            # Split content into lines and reconstruct blocks for nested processing
+            content_div = etree.SubElement(
+                callout_div, "div", {"class": "callout-content"}
+            )
             lines = content.split("\n")
-            nested_blocks = []
-            current_block = []
 
-            for line in lines:
-                cleaned = self.clean(line)
-                if cleaned:
-                    current_block.append(cleaned)
-                elif current_block:
-                    nested_blocks.append(current_block)
-                    current_block = []
+            # Group lines into regular text and nested callouts
+            text_lines = []
+            idx = 0
 
-            if current_block:
-                # Join with explicit line breaks instead of just newlines
-                joined_content = "\n<br/>\n".join(current_block)
-                nested_blocks.append(joined_content)
+            while idx < len(lines):
+                line = lines[idx].lstrip(">").lstrip()
 
-            self.parser.state.set("blockquote")
-            self.parser.parseBlocks(content_div, nested_blocks)
+                # Check if this line starts a nested callout
+                if "[!" in line and "]" in line:  # Quick pre-check for performance
+                    # If we have accumulated text, process it first
+                    if text_lines:
+                        p = etree.SubElement(content_div, "p", {"dir": "auto"})
+                        # Join with explicit <br/> tags
+                        p.text = "\n   ".join(
+                            line if i == len(text_lines) - 1 else line + "<br/>"
+                            for i, line in enumerate(text_lines)
+                        )
+                        text_lines = []
 
-            # Add dir="auto" to all paragraph elements after parsing
-            for p in content_div.findall(".//p"):
-                p.set("dir", "auto")
+                    # Collect the nested callout and all its content
+                    nested_block = []
+                    while idx < len(lines):
+                        line = lines[idx]
+                        # Remove one level of '>' prefix for proper nesting
+                        if line.startswith("> "):
+                            line = line[2:]
+                        nested_block.append(line)
+                        idx += 1
+                        if idx < len(lines) and not lines[idx].startswith(">"):
+                            break
 
-            # Parse the entire content as a single chunk
-            self.parser.state.reset()
+                    # Process the nested callout
+                    self.parser.parseChunk(content_div, "\n".join(nested_block))
+                else:
+                    if line.strip():
+                        text_lines.append(line)
+                    idx += 1
 
-        # Handle any remaining content
+            # Process any remaining text
+            if text_lines:
+                p = etree.SubElement(content_div, "p", {"dir": "auto"})
+                # Join lines with <br/> for proper line breaks
+                p.text = "\n   ".join(
+                    line if i == len(text_lines) - 1 else line + "<br/>"
+                    for i, line in enumerate(text_lines)
+                )
+
+        # If there's leftover text after the match, reinsert it
         if m.end() < len(block):
             blocks.insert(0, block[m.end() :])
 
@@ -149,11 +174,11 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
 class ObsidianCalloutsExtension(Extension):
     @classmethod
     def extendMarkdown(cls, md: Markdown) -> None:
-        parser = md.parser
-        parser.blockprocessors.register(
+        # Register at a priority just before the standard blockquote
+        md.parser.blockprocessors.register(
             ObsidianCalloutsBlockProcessor(md.parser),
             "obsidian-callouts",
-            21.1,  # Priority just before blockquote
+            21.1,
         )
 
 

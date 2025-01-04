@@ -1,0 +1,45 @@
+input: |
+  > [!question] Can callouts be nested?
+  > Let's see..
+  > I think they can...
+  > > [!todo] Yes!, they can.
+  > > They work well!
+  > > Very well
+  > > > [!example]  You can even use multiple layers of nesting.
+  > > > See?
+output: |
+  <div data-callout="question" class="callout">
+    <div class="callout-title">
+      <div class="callout-icon">❓</div>
+      <div class="callout-title-inner">Can callouts be nested?</div>
+    </div>
+    <div class="callout-content">
+      <p dir="auto">
+        Let's see..<br/>
+        I think they can...
+      </p>
+      <div data-callout="todo" class="callout">
+        <div class="callout-title">
+          <div class="callout-icon">✅</div>
+          <div class="callout-title-inner">Yes!, they can.</div>
+        </div>
+        <div class="callout-content">
+          <p dir="auto">
+            They work well!<br/>
+            Very well
+          </p>
+          <div data-callout="example" class="callout">
+            <div class="callout-title">
+              <div class="callout-icon">📋</div>
+              <div class="callout-title-inner">You can even use multiple layers of nesting.</div>
+            </div>
+            <div class="callout-content">
+              <p dir="auto">
+                See?
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
