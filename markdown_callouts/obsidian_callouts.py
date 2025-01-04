@@ -53,16 +53,6 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
         title = m[4]
         content = m[5] or ""
 
-        # Clean up the content lines and preserve line breaks
-        content_lines = []
-        for line in content.split("\n"):
-            cleaned = self.clean(line)
-            if cleaned:  # Only add non-empty lines
-                content_lines.append(cleaned)
-
-        # Join all lines with line breaks instead of creating separate paragraphs
-        content = "<br>".join(content_lines)
-
         # Create the main callout container with folding class if needed
         classes = ["callout"]
         if fold in ["+", "-"]:
@@ -118,14 +108,37 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
         # Only add content div if there is content
         if content.strip():
             content_div = etree.SubElement(admon, "div", {"class": "callout-content"})
-            self.parser.state.set("blockquote")
-            # Parse the entire content as a single chunk
-            self.parser.parseChunk(content_div, content)
 
             # Add dir="auto" to all paragraph elements in the content
             for p in content_div.findall(".//p"):
                 p.set("dir", "auto")
 
+            # Split content into lines and reconstruct blocks for nested processing
+            lines = content.split("\n")
+            nested_blocks = []
+            current_block = []
+
+            for line in lines:
+                cleaned = self.clean(line)
+                if cleaned:
+                    current_block.append(cleaned)
+                elif current_block:
+                    nested_blocks.append(current_block)
+                    current_block = []
+
+            if current_block:
+                # Join with explicit line breaks instead of just newlines
+                joined_content = "\n<br/>\n".join(current_block)
+                nested_blocks.append(joined_content)
+
+            self.parser.state.set("blockquote")
+            self.parser.parseBlocks(content_div, nested_blocks)
+
+            # Add dir="auto" to all paragraph elements after parsing
+            for p in content_div.findall(".//p"):
+                p.set("dir", "auto")
+
+            # Parse the entire content as a single chunk
             self.parser.state.reset()
 
         # Handle any remaining content
