@@ -110,7 +110,7 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
             fold_el = etree.SubElement(
                 title_container, "div", {"class": "callout-fold"}
             )
-            fold_el.text = "▶️"
+            fold_el.text = "►"
 
         # Parse the callout body
         if content.strip():
