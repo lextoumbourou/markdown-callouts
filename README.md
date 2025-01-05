@@ -1,4 +1,4 @@
-# markdown-callouts
+# markdown-obsidian-callouts
 
 **Extension for [Python-Markdown][]: a classier syntax for [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#usage)**
 

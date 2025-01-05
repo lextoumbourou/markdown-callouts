@@ -3,12 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "markdown-callouts"
+name = "markdown-obsidian-callouts"
 description = "Markdown extension: a classier syntax for admonitions"
 readme = "README.md"
 license = "MIT"
 keywords = ["markdown", "extensions"]
 authors = [
+    {name = "Lex Toumbourou", email = "lextoumbourou@gmail.com"},
     {name = "Oleh Prypin", email = "oleh@pryp.in"},
 ]
 classifiers = [
