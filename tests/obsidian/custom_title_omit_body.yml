@@ -4,8 +4,7 @@ input: |
 output: |
   <div class="callout" data-callout="note">
     <div class="callout-title">
-      <div class="callout-icon">
-        📝
+      <div class="callout-icon" data-lucide="pencil">
       </div>
       <div class="callout-title-inner">
         How many family members do you have?

@@ -10,7 +10,8 @@ input: |
 output: |
   <div data-callout="question" class="callout">
     <div class="callout-title">
-      <div class="callout-icon">❓</div>
+      <div class="callout-icon" data-lucide="help-circle">
+      </div>
       <div class="callout-title-inner">Can callouts be nested?</div>
     </div>
     <div class="callout-content">
@@ -20,7 +21,8 @@ output: |
       </p>
       <div data-callout="todo" class="callout">
         <div class="callout-title">
-          <div class="callout-icon">✅</div>
+          <div class="callout-icon" data-lucide="check-circle">
+          </div>
           <div class="callout-title-inner">Yes!, they can.</div>
         </div>
         <div class="callout-content">
@@ -30,7 +32,8 @@ output: |
           </p>
           <div data-callout="example" class="callout">
             <div class="callout-title">
-              <div class="callout-icon">📋</div>
+              <div class="callout-icon" data-lucide="list">
+              </div>
               <div class="callout-title-inner">You can even use multiple layers of nesting.</div>
             </div>
             <div class="callout-content">

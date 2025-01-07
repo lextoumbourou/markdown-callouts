@@ -4,8 +4,7 @@ input: |
 output: |
   <div data-callout="question" class="callout is-collapsible">
     <div class="callout-title" dir="auto">
-      <div class="callout-icon">
-        ❓
+      <div class="callout-icon" data-lucide="help-circle">
       </div>
       <div class="callout-title-inner">
         What is the capital city of Australia?

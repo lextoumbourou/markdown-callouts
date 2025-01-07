@@ -77,25 +77,33 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
             title_attrs["dir"] = "auto"
         title_container = etree.SubElement(callout_div, "div", title_attrs)
 
-        # Icon
+        # Icon mapping using Lucide icon names
         icon_map = {
-            "note": "📝",
-            "abstract": "📄",
-            "document": "📄",
-            "info": "ℹ️",
-            "todo": "✅",
-            "tip": "💡",
-            "success": "✅",
-            "question": "❓",
-            "warning": "⚠️",
-            "failure": "❌",
-            "danger": "⛔",
-            "bug": "🐛",
-            "example": "📋",
-            "quote": "💬",
+            "note": "pencil",
+            "abstract": "clipboard",
+            "document": "file-text",
+            "info": "info",
+            "todo": "check-circle",
+            "tip": "lightbulb",
+            "success": "check",
+            "question": "help-circle",
+            "warning": "alert-triangle",
+            "failure": "x-circle",
+            "danger": "alert-octagon",
+            "bug": "bug",
+            "example": "list",
+            "quote": "quote",
         }
-        icon_el = etree.SubElement(title_container, "div", {"class": "callout-icon"})
-        icon_el.text = icon_map.get(kind.lower(), "📝")
+        
+        icon_el = etree.SubElement(
+            title_container, 
+            "div", 
+            {
+                "class": "callout-icon",
+                "data-lucide": icon_map.get(kind.lower(), "pencil")
+            }
+        )
+        assert not icon_el.text
 
         # Title text
         title_inner = etree.SubElement(

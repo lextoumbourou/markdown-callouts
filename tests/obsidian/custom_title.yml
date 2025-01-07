@@ -4,8 +4,7 @@ input: |
 output: |
   <div class="callout" data-callout="question">
     <div class="callout-title">
-      <div class="callout-icon">
-        ❓
+      <div class="callout-icon" data-lucide="help-circle">
       </div>
       <div class="callout-title-inner">
         What is the capital of France?

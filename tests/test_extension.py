@@ -4,18 +4,14 @@ import bs4
 import pytest
 from markdown import Markdown
 
-from markdown_callouts.callouts import CalloutsExtension
-from markdown_callouts.github_callouts import GitHubCalloutsExtension
-from markdown_callouts.obsidian_callouts import ObsidianCalloutsExtension
+from markdown_obsidian_callouts.obsidian_callouts import ObsidianCalloutsExtension
 
 extension_styles = {
-    "callouts": CalloutsExtension,
-    "github": GitHubCalloutsExtension,
     "obsidian": ObsidianCalloutsExtension,
 }
 
 
-@pytest.mark.golden_test("callouts/**/*.yml", "github/**/*.yml", "obsidian/**/*.yml", "all/**/*.yml")
+@pytest.mark.golden_test("obsidian/**/*.yml")
 def test_extension(request, golden):
     config = {k: golden[k] for k in ["strip_period"] if golden.get(k) is not None}
     extensions = [
