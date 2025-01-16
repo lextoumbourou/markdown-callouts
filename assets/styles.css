@@ -55,10 +55,6 @@ body {
     background-color: rgba(var(--callout-color), 0.1);
 }
 
-.callout.is-collapsed .callout-content {
-    display: none;
-}
-
 /* Fold icon using Lucide */
 .callout-fold {
     margin-left: auto;
@@ -73,4 +69,4 @@ body {
 
 .callout.is-collapsed .callout-fold svg {
     transform: rotate(-90deg);
-} 
+}

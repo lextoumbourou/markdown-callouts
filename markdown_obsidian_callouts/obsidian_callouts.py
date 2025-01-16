@@ -64,6 +64,8 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
         div_classes = ["callout"]
         if fold in ["+", "-"]:
             div_classes.append("is-collapsible")
+            if fold == "-":  # Add is-collapsed class only for folded state
+                div_classes.append("is-collapsed")
 
         callout_div = etree.SubElement(
             parent,
@@ -120,7 +122,7 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
                 "div", 
                 {
                     "class": "callout-fold",
-                    "data-lucide": "chevron-down"
+                    "data-lucide": "chevron-right" if fold == "-" else "chevron-down"
                 }
             )
 
