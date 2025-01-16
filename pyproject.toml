@@ -1,6 +1,6 @@
 [project]
 name = "markdown-obsidian-callouts"
-version = "0.1.1"
+dynamic = ["version"]
 description = "MarkDown extension: a classier syntax for admonitions"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -48,3 +48,6 @@ dev = [
 
 [tool.setuptools]
 packages = ["markdown_obsidian_callouts"]
+
+[tool.setuptools.dynamic]
+version = {attr = "markdown_obsidian_callouts.__version__"}
