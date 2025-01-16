@@ -116,9 +116,13 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
         # Fold icon if needed
         if fold in ["+", "-"]:
             fold_el = etree.SubElement(
-                title_container, "div", {"class": "callout-fold"}
+                title_container, 
+                "div", 
+                {
+                    "class": "callout-fold",
+                    "data-lucide": "chevron-down"
+                }
             )
-            fold_el.text = "►"
 
         # Parse the callout body
         if content.strip():

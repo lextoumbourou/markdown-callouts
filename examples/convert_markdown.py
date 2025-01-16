@@ -5,12 +5,14 @@ from jinja2 import Template
 
 def convert_markdown_to_html(input_file: Path) -> None:
     """Convert a Markdown file to HTML with callouts support."""
-    # Load template and styles
+    # Load template, styles and scripts
     template_path = Path('assets/template.html')
     styles_path = Path('assets/styles.css')
+    scripts_path = Path('assets/callouts.js')
     
     html_template = template_path.read_text(encoding='utf-8')
     css_styles = styles_path.read_text(encoding='utf-8')
+    js_scripts = scripts_path.read_text(encoding='utf-8')
     
     # Create markdown converter with extensions
     md = markdown.Markdown(extensions=[
@@ -30,7 +32,8 @@ def convert_markdown_to_html(input_file: Path) -> None:
     final_html = template.render(
         title=input_file.stem,
         content=html_content,
-        styles=css_styles
+        styles=css_styles,
+        scripts=js_scripts
     )
     
     # Write output file

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>callsouts</title>
+    <title>callouts</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* Basic styling */
@@ -53,10 +53,40 @@ body {
 .callout[data-callout="bug"] { --callout-color: 211, 47, 47; }
 .callout[data-callout="example"] { --callout-color: 156, 39, 176; }
 .callout[data-callout="quote"] { --callout-color: 158, 158, 158; } 
+
+/* Collapsible callout styles */
+.callout.is-collapsible .callout-title {
+    cursor: pointer;
+}
+
+.callout.is-collapsible .callout-title:hover {
+    background-color: rgba(var(--callout-color), 0.1);
+}
+
+.callout.is-collapsed .callout-content {
+    display: none;
+}
+
+/* Fold icon using Lucide */
+.callout-fold {
+    margin-left: auto;
+}
+
+.callout-fold svg {
+    width: 16px;
+    height: 16px;
+    stroke: rgb(var(--callout-color));
+    transition: transform 0.15s ease;
+}
+
+.callout.is-collapsed .callout-fold svg {
+    transform: rotate(-90deg);
+} 
     </style>
 </head>
 <body>
     <h1>Callout Examples</h1>
+<h2>Basic Callouts</h2>
 <div class="callout" data-callout="note">
 <div class="callout-title">
 <div class="callout-icon" data-lucide="pencil"></div>
@@ -76,6 +106,32 @@ body {
    It can contain <strong>bold</strong> and <em>italic</em> text.</p>
 </div>
 </div>
+<h2>Collapsible Callouts</h2>
+<div class="callout is-collapsible" data-callout="tip">
+<div class="callout-title" dir="auto">
+<div class="callout-icon" data-lucide="lightbulb"></div>
+<div class="callout-title-inner">Collapsed by Default</div>
+<div class="callout-fold" data-lucide="chevron-down"></div>
+</div>
+<div class="callout-content">
+<p dir="auto">This callout starts collapsed.<br/>
+   1. You can include lists<br/>
+   2. And other markdown features</p>
+</div>
+</div>
+<div class="callout is-collapsible" data-callout="question">
+<div class="callout-title" dir="auto">
+<div class="callout-icon" data-lucide="help-circle"></div>
+<div class="callout-title-inner">Expanded by Default</div>
+<div class="callout-fold" data-lucide="chevron-down"></div>
+</div>
+<div class="callout-content">
+<p dir="auto">This callout starts expanded.<br/>
+   * Bullet points work too<br/>
+   * Click the title to collapse</p>
+</div>
+</div>
+<h2>Nested Callouts</h2>
 <div class="callout" data-callout="tip">
 <div class="callout-title">
 <div class="callout-icon" data-lucide="lightbulb"></div>
@@ -90,10 +146,168 @@ body {
 </div>
 <div class="callout-content">
 <p dir="auto">This is nested inside the tip.</p>
+<div class="callout" data-callout="info">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="info"></div>
+<div class="callout-title-inner">Deep Nesting</div>
+</div>
+<div class="callout-content">
+<p dir="auto">You can nest callouts multiple levels deep!</p>
 </div>
 </div>
 </div>
 </div>
+</div>
+</div>
+<h2>All Available Types</h2>
+<div class="callout" data-callout="note">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="pencil"></div>
+<div class="callout-title-inner">Note</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For general information or references</p>
+</div>
+</div>
+<div class="callout" data-callout="abstract">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="clipboard"></div>
+<div class="callout-title-inner">Abstract/Summary</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For executive summary or key takeaways</p>
+</div>
+</div>
+<div class="callout" data-callout="info">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="info"></div>
+<div class="callout-title-inner">Info</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For neutral information or explanations</p>
+</div>
+</div>
+<div class="callout" data-callout="todo">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="check-circle"></div>
+<div class="callout-title-inner">Todo</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For task lists or checklists</p>
+</div>
+</div>
+<div class="callout" data-callout="tip">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="lightbulb"></div>
+<div class="callout-title-inner">Tip/Hint</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For helpful tips or guidance</p>
+</div>
+</div>
+<div class="callout" data-callout="success">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="check"></div>
+<div class="callout-title-inner">Success/Check</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For successful operations or validations</p>
+</div>
+</div>
+<div class="callout" data-callout="question">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="help-circle"></div>
+<div class="callout-title-inner">Question/Help</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For questions or areas needing clarification</p>
+</div>
+</div>
+<div class="callout" data-callout="warning">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="alert-triangle"></div>
+<div class="callout-title-inner">Warning/Caution</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For warnings or cautionary advice</p>
+</div>
+</div>
+<div class="callout" data-callout="failure">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="x-circle"></div>
+<div class="callout-title-inner">Failure/Fail</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For failed operations or errors</p>
+</div>
+</div>
+<div class="callout" data-callout="danger">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="alert-octagon"></div>
+<div class="callout-title-inner">Danger</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For dangerous or high-risk information</p>
+</div>
+</div>
+<div class="callout" data-callout="bug">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="bug"></div>
+<div class="callout-title-inner">Bug</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For known issues or bugs</p>
+</div>
+</div>
+<div class="callout" data-callout="example">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="list"></div>
+<div class="callout-title-inner">Example</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For examples or demonstrations</p>
+</div>
+</div>
+<div class="callout" data-callout="quote">
+<div class="callout-title">
+<div class="callout-icon" data-lucide="quote"></div>
+<div class="callout-title-inner">Quote</div>
+</div>
+<div class="callout-content">
+<p dir="auto">For quotations or citations</p>
+</div>
+</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+  // Initialize all collapsible callouts
+  const collapsibleCallouts = document.querySelectorAll(".callout.is-collapsible");
+  collapsibleCallouts.forEach(callout => {
+    callout.classList.add("is-collapsed");
+    const content = callout.querySelector(".callout-content");
+    if (content) content.style.display = "none";
+  });
+
+  // Handle click events on callout titles
+  document.addEventListener("click", function (event) {
+    const header = event.target.closest(".callout-title");
+    if (!header) return;
+
+    const callout = header.closest(".callout.is-collapsible");
+    if (!callout) return;
+
+    callout.classList.toggle("is-collapsed");
+
+    const content = callout.querySelector(".callout-content");
+    if (!content) return;
+
+    if (callout.classList.contains("is-collapsed")) {
+      content.style.display = "none";
+    } else {
+      content.style.display = "";
+    }
+  });
+}); 
+    </script>
     <script>
         lucide.createIcons();
     </script>
