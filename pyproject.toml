@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "MarkDown extension: a classier syntax for admonitions"
 readme = "README.md"
 requires-python = ">=3.9"
-license = "MIT"
+license = { file = "LICENSE.md" }
 authors = [
     { name = "Lex Toumbourou", email = "lextoumbourou@gmail.com" }
 ]
@@ -39,3 +39,12 @@ target-version = "py39"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "ruff>=0.1.0",
+]
+
+[tool.setuptools]
+packages = ["markdown_obsidian_callouts"]
