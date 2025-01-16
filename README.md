@@ -1,8 +1,9 @@
 # markdown-obsidian-callouts
 
+**[Python-Markdown](https://python-markdown.github.io/) Extension: use Obsidian Style callouts in Markdown**
+
 ![Example of Obsidian Callout from the Obsidian docs page](image.png)
 
-**Extension for [Python-Markdown](https://python-markdown.github.io/): use Obsidian Style callouts in Markdown**
 
 This plugin inputs the Obsidian syntax and output format for [Callouts](https://help.obsidian.md/Editing+and+formatting/Callouts)
 

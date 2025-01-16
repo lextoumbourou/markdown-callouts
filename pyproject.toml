@@ -1,6 +1,6 @@
 [project]
 name = "markdown-obsidian-callouts"
-version = "0.1.0"
+version = "0.1.1"
 description = "MarkDown extension: a classier syntax for admonitions"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -23,8 +23,8 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/yourusername/markdown-obsidian-callouts"
-Source = "https://github.com/yourusername/markdown-obsidian-callouts"
+Documentation = "https://github.com/lextoumbourou/markdown-obsidian-callouts"
+Source = "https://github.com/lextoumbourou/markdown-obsidian-callouts"
 
 [project.entry-points."markdown.extensions"]
 obsidian-callouts = "markdown_obsidian_callouts.obsidian_callouts:ObsidianCalloutsExtension"
