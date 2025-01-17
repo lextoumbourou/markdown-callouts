@@ -117,7 +117,7 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
 
         # Fold icon if needed
         if fold in ["+", "-"]:
-            fold_el = etree.SubElement(
+            etree.SubElement(
                 title_container, 
                 "div", 
                 {

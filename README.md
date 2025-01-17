@@ -47,6 +47,7 @@ css_path = get_css_path()  # Returns path to the CSS file
 js_path = get_js_path()    # Returns path to the JS file
 ```
 
+
 #### Option 2: Using CDN
 
 Alternatively, you can include the assets from a CDN:
@@ -55,6 +56,20 @@ Alternatively, you can include the assets from a CDN:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-obsidian-callouts@latest/assets/callouts.min.css">
 <script src="https://cdn.jsdelivr.net/npm/markdown-obsidian-callouts@latest/assets/callouts.min.js"></script>
 ```
+
+#### Install icons
+
+Additionally, you'll need to include the Lucide icons library:
+
+```html
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+```
+
+See [Lucide docs](https://lucide.dev) for more options.
+
 
 ## Development Setup
 

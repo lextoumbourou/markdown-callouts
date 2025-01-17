@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
-import os
 from pathlib import Path
 
 def get_static_path() -> Path:
