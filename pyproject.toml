@@ -30,7 +30,11 @@ Source = "https://github.com/lextoumbourou/markdown-obsidian-callouts"
 obsidian-callouts = "markdown_obsidian_callouts.obsidian_callouts:ObsidianCalloutsExtension"
 
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = [
+    "setuptools>=45",
+    "wheel",
+    "nodeenv"
+]
 build-backend = "setuptools.build_meta"
 
 [tool.ruff]
@@ -46,10 +50,13 @@ dev = [
     "pyyaml>=6.0",
     "ruff>=0.1.0",
     "beautifulsoup4>=4.12.0",
+    "nodeenv>=1.8.0",
+    "pytest-golden>=0.2.2",
 ]
 
 [tool.setuptools]
 packages = ["markdown_obsidian_callouts"]
+package-data = {"markdown_obsidian_callouts" = ["static/*.min.*"]}
 
 [tool.setuptools.dynamic]
 version = {attr = "markdown_obsidian_callouts.__version__"}
