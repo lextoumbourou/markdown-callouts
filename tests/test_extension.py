@@ -1,4 +1,3 @@
-
 import bs4
 import pytest
 from markdown import Markdown

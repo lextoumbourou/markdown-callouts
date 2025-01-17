@@ -34,10 +34,7 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
 
     def test(self, parent, block):
         # Allow callouts even inside blockquotes, so we can nest them
-        return (
-            bool(self.CALLOUT_PATTERN.search(block))
-            and not util.nearing_recursion_limit()
-        )
+        return bool(self.CALLOUT_PATTERN.search(block)) and not util.nearing_recursion_limit()
 
     def run(self, parent: etree.Element, blocks: list[str]) -> None:
         """
@@ -96,14 +93,11 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
             "example": "list",
             "quote": "quote",
         }
-        
+
         icon_el = etree.SubElement(
-            title_container, 
-            "div", 
-            {
-                "class": "callout-icon",
-                "data-lucide": icon_map.get(kind.lower(), "pencil")
-            }
+            title_container,
+            "div",
+            {"class": "callout-icon", "data-lucide": icon_map.get(kind.lower(), "pencil")},
         )
         assert not icon_el.text
 
@@ -118,19 +112,17 @@ class ObsidianCalloutsBlockProcessor(BlockQuoteProcessor):
         # Fold icon if needed
         if fold in ["+", "-"]:
             etree.SubElement(
-                title_container, 
-                "div", 
+                title_container,
+                "div",
                 {
                     "class": "callout-fold",
-                    "data-lucide": "chevron-right" if fold == "-" else "chevron-down"
-                }
+                    "data-lucide": "chevron-right" if fold == "-" else "chevron-down",
+                },
             )
 
         # Parse the callout body
         if content.strip():
-            content_div = etree.SubElement(
-                callout_div, "div", {"class": "callout-content"}
-            )
+            content_div = etree.SubElement(callout_div, "div", {"class": "callout-content"})
             lines = content.split("\n")
 
             # Group lines into regular text and nested callouts
