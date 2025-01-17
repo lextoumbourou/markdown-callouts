@@ -53,8 +53,8 @@ js_path = get_js_path()    # Returns path to the JS file
 Alternatively, you can include the assets from a CDN:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-obsidian-callouts@latest/assets/callouts.min.css">
-<script src="https://cdn.jsdelivr.net/npm/markdown-obsidian-callouts@latest/assets/callouts.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lextoumbourou/markdown-obsidian-callouts@002db002bc3b9832ac0e692c26becc5261caf5be/markdown_obsidian_callouts/static/callouts.min.css">
+<script src="https://cdn.jsdelivr.net/gh/lextoumbourou/markdown-obsidian-callouts@002db002bc3b9832ac0e692c26becc5261caf5be/markdown_obsidian_callouts/static/callouts.min.js"></script>
 ```
 
 #### Install icons
